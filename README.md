@@ -68,6 +68,9 @@ $ truffle migrate
 ## 6. 실행하기
 ```sh
 # vscode에서 터미널에 들어가서
+# 먼저 web3과 web-react 설치
+$ npm install web3
+$ npm install web-react
 $ npm start
 ```
 - 성공 시
