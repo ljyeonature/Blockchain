@@ -24,6 +24,7 @@ $ create-react-app 프로젝트이름
 ```sh
 # 만든 프로젝트 vscode로 들어가기
 # vscode 메뉴 중 Terminal > new Terminal
+$ npm install -g truffle
 $ truffle init
 ```
 - 성공 시
