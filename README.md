@@ -16,7 +16,7 @@ https://about-tech.tistory.com/208
 $ create-react-app 프로젝트이름
 ```
 - 성공 시
-![image](https://github.com/ljyeonature/BlockChain-Dapp/assets/100672796/5ef75d5b-d725-44dc-bd88-3dce3e004b22)
+- 마지막에 Happy Hacking 뜨면 성공.
 
 ## 1. truffle 설치
 ```sh
