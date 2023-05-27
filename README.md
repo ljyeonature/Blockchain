@@ -16,7 +16,6 @@ https://about-tech.tistory.com/208
 $ create-react-app 프로젝트이름
 ```
 - 성공 시
-- <img src="[https://url/image.png](https://github.com/ljyeonature/BlockChain-Dapp/assets/100672796/5ef75d5b-d725-44dc-bd88-3dce3e004b22)" width="300" height="300"/>
 ![image](https://github.com/ljyeonature/BlockChain-Dapp/assets/100672796/5ef75d5b-d725-44dc-bd88-3dce3e004b22)
 
 ## 1. truffle 설치
