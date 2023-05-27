@@ -81,7 +81,10 @@ $ npm start
 
 ## 7. 웹 화면
 - 이 화면이 나오면 된다.
-![image](https://github.com/ljyeonature/BlockChain-Dapp/assets/100672796/299e35c5-2f76-4e01-88a3-d38b8085e339)
+![image](https://github.com/ljyeonature/Blockchain/assets/100672796/c7d87742-2528-4d9e-a52c-f63f71c6abff)
+Connetec Account가 Ganache에서 연결한 계정인지 보면 확인!
+![image](https://github.com/ljyeonature/Blockchain/assets/100672796/9dca860c-58c2-4035-aebc-49f62fda993f)
+
 
 
 
