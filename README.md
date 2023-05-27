@@ -40,7 +40,7 @@ $ truffle init
 
 
 ## 3. 스마트 컨트랙트 코드 작성하기 - contracts & migrations
-![image](https://github.com/ljyeonature/BlockChain-Dapp/assets/100672796/cc899f5c-1fd0-41f1-99a7-15132d883490)
+![image](https://github.com/ljyeonature/Blockchain/assets/100672796/3c6a280a-b583-4961-89fc-198548d6bf9b)
 - 코드는 위에 경로로 들어가서 코드 복사/붙여넣기
 - contracts > Donation.sol(새로 만들고 내용 채우기)
 - migrations > 1_deploy_donation.js(새로 만들고 내용 채우기)
