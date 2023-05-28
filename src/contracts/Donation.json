@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "contractName": "Donation",
   "abi": [
@@ -9542,3 +9543,6 @@
     "version": 1
   }
 }
+=======
+
+>>>>>>> b0794b35399c9eaad263028ed8b383a8dbc4f479

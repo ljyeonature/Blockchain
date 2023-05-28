@@ -16,28 +16,32 @@ https://about-tech.tistory.com/208
 $ create-react-app 프로젝트이름
 ```
 - 성공 시
-![image](https://github.com/ljyeonature/BlockChain-Dapp/assets/100672796/5ef75d5b-d725-44dc-bd88-3dce3e004b22)
+- 마지막에 Happy Hacking 뜨면 성공.
+![image](https://github.com/ljyeonature/Blockchain/assets/100672796/4ba8dfe6-8d26-40c9-bb23-f07fe8b6dab5)
+
 
 ## 1. truffle 설치
 ```sh
 # 만든 프로젝트 vscode로 들어가기
 # vscode 메뉴 중 Terminal > new Terminal
+$ npm install -g truffle
 $ truffle init
 ```
 - 성공 시
-![image](https://github.com/ljyeonature/BlockChain-Dapp/assets/100672796/8a64ae48-c681-4805-a793-c91d14455e30)
+![image](https://github.com/ljyeonature/Blockchain/assets/100672796/32f77ca7-25e6-4fb2-ac23-64beff96f92e)
 
 - 디렉토리 사진
-![image](https://github.com/ljyeonature/Blockchain/assets/100672796/38659070-67b7-422c-8441-77bb52113914)
+![image](https://github.com/ljyeonature/Blockchain/assets/100672796/dd832da3-a709-4c16-8a07-8c9ae4695b9f)
+
 
 ## 2. truffle-config.js 파일 고치기
-![image](https://github.com/ljyeonature/BlockChain-Dapp/assets/100672796/74911434-85e2-4a67-b9c1-491bcae36972)
-![image](https://github.com/ljyeonature/BlockChain-Dapp/assets/100672796/c5689c66-5ae2-44c1-a4d2-816e955913d3)
+![image](https://github.com/ljyeonature/Blockchain/assets/100672796/478d110c-e3c8-44c1-b207-c3a2df313299)
+![image](https://github.com/ljyeonature/Blockchain/assets/100672796/aaad51cc-fbfd-4dea-8a4d-fdfbb4782517)
 - 위 사진처럼 작성! 주석 부분으로 처리 되어있으니깐 주석 없애고 내용만 고치면 끝!
-- 첫번째 사진에 networks 위에 contracts_build_directory가 있는데 안써도 됨..!
+
 
 ## 3. 스마트 컨트랙트 코드 작성하기 - contracts & migrations
-![image](https://github.com/ljyeonature/BlockChain-Dapp/assets/100672796/cc899f5c-1fd0-41f1-99a7-15132d883490)
+![image](https://github.com/ljyeonature/Blockchain/assets/100672796/3c6a280a-b583-4961-89fc-198548d6bf9b)
 - 코드는 위에 경로로 들어가서 코드 복사/붙여넣기
 - contracts > Donation.sol(새로 만들고 내용 채우기)
 - migrations > 1_deploy_donation.js(새로 만들고 내용 채우기)
@@ -68,6 +72,9 @@ $ truffle migrate
 ## 6. 실행하기
 ```sh
 # vscode에서 터미널에 들어가서
+# 먼저 web3과 web-react 설치
+$ npm install web3
+$ npm install web3-react
 $ npm start
 ```
 - 성공 시
@@ -75,7 +82,10 @@ $ npm start
 
 ## 7. 웹 화면
 - 이 화면이 나오면 된다.
-![image](https://github.com/ljyeonature/BlockChain-Dapp/assets/100672796/299e35c5-2f76-4e01-88a3-d38b8085e339)
+![image](https://github.com/ljyeonature/Blockchain/assets/100672796/c7d87742-2528-4d9e-a52c-f63f71c6abff)
+Connetec Account가 Ganache에서 연결한 계정인지 보면 확인!
+![image](https://github.com/ljyeonature/Blockchain/assets/100672796/9dca860c-58c2-4035-aebc-49f62fda993f)
+
 
 
 
