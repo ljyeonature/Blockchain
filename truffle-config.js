@@ -56,6 +56,8 @@ module.exports = {
    *
    * $ truffle test --network <network-name>
    */
+  // truffle compile 후 abi 파일 경로 설정
+  contracts_build_directory: './src/contracts',
 
   networks: {
     // Useful for testing. The `development` name is special - truffle uses it by default
@@ -69,6 +71,7 @@ module.exports = {
      port: 7545,            // Standard Ethereum port (default: none)
      network_id: "5777",       // Any network (default: none)
     },
+   
     //
     // An additional network, but with some advanced options…
     // advanced: {
