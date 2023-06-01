@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 
@@ -8,6 +8,8 @@ function Home() {
     Account: ""
   });
   const [isMetamaskConnected, setIsMetamaskConnected] = useState(false);
+  const navigate = useNavigate();
+  
 
   let walletConnect = async () => {
     const accounts = await window.ethereum.request({
@@ -53,6 +55,12 @@ function Home() {
     // eslint-disable-next-line
   }, []);
 
+  const goToDonationPage = () => {
+    if (isMetamaskConnected) {
+      navigate('/donation');
+    }
+  };
+
 
   return (
     <div>
@@ -61,9 +69,6 @@ function Home() {
           <ul>
             <li>
               <Link to={'/'}>홈</Link>
-            </li>
-            <li>
-              <Link to={'/donation'}>기부</Link>
             </li>
           </ul>
         </nav>
@@ -75,6 +80,7 @@ function Home() {
           <p>1. Please disconnect <strong>manually</strong> from MetaMask.</p>
           <p>2. Please push Button Logout to return Connect MetaMask.</p>
           <button onClick={logout}>Logout</button>
+          <button onClick={goToDonationPage}>Go to Donation Page</button>
         </div>
         ) : (
           <button onClick={walletConnect}>Connect Metamask</button>
