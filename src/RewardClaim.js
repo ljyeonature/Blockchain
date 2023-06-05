@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 
 
-const RewardClaim = ({ account, contract, setRewardAmount }) => {
+const RewardClaim = ({ account, contract, setRewardAmount, setRewarded }) => {
     const [loading, setLoading] = useState(false);
   
     const claimReward = async () => {
@@ -11,7 +11,7 @@ const RewardClaim = ({ account, contract, setRewardAmount }) => {
           await contract.methods.claimReward().send({ from: account });
           const reward = await contract.methods.rewardAmount().call();
           setRewardAmount(reward);
-          window.location.reload();
+          setRewarded(true);
         } catch (error) {
           console.error(error);
         }

@@ -1,47 +1,40 @@
 import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from 'react-router-dom';
 import Web3 from "web3";
 import DonationContract from "./contracts/Donation.json";
 import DonateForm from "./DonateForm";
 import WithdrawForm from "./WithdrawForm";
 import RewardClaim from "./RewardClaim";
+import ProductForm from "./ProductForm";
 
 const Donation = () => {
   const [account, setAccount] = useState("");
   const [contract, setContract] = useState(null);
-  const [rewardAmount, setRewardAmount] = useState(0);
   const [totalDonations, setTotalDonations] = useState(0);
   const [withdrawnAmount, setWithdrawnAmount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [charityAddress, setCharityAddress] = useState("");
   const [receiverAddress, setReceiverAddress] = useState("");
-  const [rewardCounts, setRewardCounts] = useState({});
   const [rewarded, setRewarded] = useState(false);
   const [metamaskAccount, setMetamaskAccount] = useState("");
   const [contractBalance, setContractBalance] = useState(0);
+  const [projectCount, setProjectCount] = useState(0);
+  const navigate = useNavigate();
+  const [rewardAmount, setRewardAmount] = useState(() => {
+    const savedRewardAmount = localStorage.getItem('rewardAmount');
+    return savedRewardAmount ? parseFloat(savedRewardAmount) : 0;
+  })
 
+  useEffect(() => {
+    localStorage.setItem('rewardAmount', rewardAmount.toString());
+  }, [rewardAmount]);
 
-  const saveRewardCountsToLocalStorage = (counts) => {
-    localStorage.setItem("rewardCounts", JSON.stringify(counts));
-  };
-
-  const loadRewardCountsFromLocalStorage = () => {
-    const countsFromStorage = JSON.parse(localStorage.getItem("rewardCounts"));
-    return countsFromStorage || {};
-  };
-
+  
   
   useEffect(() => {
     loadBlockchainData();
   }, []);
 
-  useEffect(() => {
-    const countsFromStorage = loadRewardCountsFromLocalStorage();
-    setRewardCounts(countsFromStorage);
-  }, []);
-
-  useEffect(() => {
-    saveRewardCountsToLocalStorage(rewardCounts);
-  }, [rewardCounts]);
 
   const loadBlockchainData = async () => {
     try {
@@ -60,7 +53,7 @@ const Donation = () => {
         );
         setContract(contractInstance);
 
-        const reward = await contractInstance.methods.rewardAmount().call();
+        const reward = await contractInstance.methods.getRewardAmount().call();
         setRewardAmount(reward);
 
         const donations = await contractInstance.methods.totalDonations().call();
@@ -81,6 +74,7 @@ const Donation = () => {
 
         const balance = await contractInstance.methods.getContractBalance().call();
         setContractBalance(balance);
+
       }
       setLoading(false);
 
@@ -90,28 +84,47 @@ const Donation = () => {
     }
   };
 
+  const handlePurchase = async () => {
+    try {
+      const productsCount = await contract.methods.getProductsCount().call();
+      const products = [];
+
+      for (let i = 0; i < productsCount; i++) {
+        const product = await contract.methods.products(i).call();
+        products.push(product);
+      }
+
+      navigate('/purchase', { state: { products } });
+    } catch (error) {
+      console.error("Failed to fetch products:", error);
+    }
+  }
+
+  
   if (loading) {
     return <div>Loading...</div>;
   }
-
+  
   return (
     <div>
+      <button><Link to={'/'}>홈</Link></button>
+      <button onClick={handlePurchase}>상점</button>
       <h1>Donation App</h1>
       <p>Account: {account}</p>
       <p>Charity Address: {charityAddress}</p>
       <p>Receiver Address: {receiverAddress}</p>
       <p>
         Total Donations:{" "}
-        {parseFloat(Web3.utils.fromWei(totalDonations.toString(), "ether")).toFixed(2)} ETH
+        {parseFloat(Web3.utils.fromWei(totalDonations.toString(), "ether"))} ETH
       </p>
       <p>
         Withdrawn Amount:{" "}
-        {parseFloat(Web3.utils.fromWei(withdrawnAmount.toString(), "ether")).toFixed(2)} ETH
+        {parseFloat(Web3.utils.fromWei(withdrawnAmount.toString(), "ether"))} ETH
       </p>
       {/* 스마트 컨트랙트 주소에 담긴 잔액 */}
       <p>
         Contract Balance:{" "}
-        {parseFloat(Web3.utils.fromWei(contractBalance.toString(), "ether")).toFixed(2)} ETH
+        {parseFloat(Web3.utils.fromWei(contractBalance.toString(), "ether"))} ETH
       </p>
       {/* 기부하기 - 기부자 */}
       {metamaskAccount !== charityAddress && metamaskAccount !== receiverAddress ? 
@@ -119,9 +132,7 @@ const Donation = () => {
         account={account}
         contract={contract}
         setTotalDonations={setTotalDonations}
-        setRewardCounts={setRewardCounts}
-        saveRewardCountsToLocalStorage={saveRewardCountsToLocalStorage}
-      />) : <p></p>
+      />) : null
       
     }
     {/* 인출하기 - 자선단체 */}
@@ -131,16 +142,13 @@ const Donation = () => {
       contract={contract}
       setWithdrawnAmount={setWithdrawnAmount}
       receiverAddress={receiverAddress}
-    />) : <p></p>      
+    />) : null      
     }
     {/* 보상받기 - 기부자 : 기부할 때마다 0.01씩 */}
     {
       metamaskAccount !== charityAddress && metamaskAccount !== receiverAddress ? (
         <div>
-          <p>Reward Amount : {rewardAmount} ETH</p>
-          <p>
-            Total Reward Amount (Account {account}): {rewardCounts[account] * 0.01 || 0} ETH
-          </p>
+         <p>Reward Amount: {parseFloat(Web3.utils.fromWei(rewardAmount.toString(), "ether"))} ETH</p>
           {!rewarded ? (
             <RewardClaim
               account={account}
@@ -155,9 +163,16 @@ const Donation = () => {
           )}
         </div>
       ) : (
-        <p></p>
+        null
       )
     }
+    {/* 물건 등록하기 - 판매자 */}
+    {metamaskAccount === charityAddress ? (
+        <ProductForm account={account} contract={contract} setProjectCount={setProjectCount} />
+      ) : null
+    }
+    
+    
     </div>
   );
 };

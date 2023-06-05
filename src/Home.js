@@ -58,9 +58,10 @@ function Home() {
   const goToDonationPage = () => {
     if (isMetamaskConnected) {
       navigate('/donation');
+    } else {
+      window.alert("Please Connect to MetaMask.");
     }
   };
-
 
   return (
     <div>
@@ -77,6 +78,7 @@ function Home() {
         {isMetamaskConnected ? (
           <div>
           <p>Metamask is connected.</p>
+          <p>Conneted Account : {userAccount.Account}</p>
           <p>1. Please disconnect <strong>manually</strong> from MetaMask.</p>
           <p>2. Please push Button Logout to return Connect MetaMask.</p>
           <button onClick={logout}>Logout</button>

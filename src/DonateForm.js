@@ -17,12 +17,7 @@ const DonateForm = ({ account, contract,rewardCounts, setTotalDonations, setRewa
         const updatedDonations = await contract.methods.totalDonations().call();
         setTotalDonations(updatedDonations);
         setDonationAmount(0);
-        setRewardCounts((prevCounts) => {
-          const updatedCounts = { ...prevCounts };
-          updatedCounts[account] = (updatedCounts[account] || 0) + 1;
-          return updatedCounts;
-        });
-        saveRewardCountsToLocalStorage(rewardCounts);
+        window.location.reload();
       } catch (error) {
         console.error(error);
       }
