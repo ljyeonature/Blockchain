@@ -10,11 +10,9 @@ const Purchase = () => {
   const [products, setProducts] = useState([]);
   const [purchases, setPurchases] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [rewardAmount, setRewardAmount] = useState(() => {
-    const savedRewardAmount = localStorage.getItem('rewardAmount');
-    return savedRewardAmount ? parseFloat(savedRewardAmount) : 0;
-  })
-  
+  const [contractBalance, setContractBalance] = useState(0);
+
+
   useEffect(() => {
     // 웹3 인스턴스 생성
     const initWeb3 = async () => {
@@ -28,7 +26,6 @@ const Purchase = () => {
         }
       }
     };
-
     initWeb3();
   }, []);
 
@@ -54,13 +51,15 @@ const Purchase = () => {
         }
         setPurchases(purchases);
 
+        const balance = await contract.methods.getContractBalance().call();
+        setContractBalance(balance);
+
 
         } catch (error) {
           console.error('Error initializing contract:', error);
         }
       }
     };
-
     initContract();
   }, [web3]);
 
@@ -99,51 +98,59 @@ const Purchase = () => {
     }
   };
   useEffect(() => {
+    // 물건 목록 가져오기
+  const getProducts = async () => {
+    if (contract) {
+      try {
+        const productCount = await contract.methods.projectCount().call();
+        const products = [];
 
+        for (let i = 0; i < productCount; i++) {
+          const product = await contract.methods.products(i).call();
+          products.push(product);
+        }
+
+        setProducts(products);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    }
+  };
     getProducts();
   }, [contract]);
+  
 
   const handleProductChange = (event) => {
     setSelectedProduct(event.target.value);
   };
-
+  
   const handlePurchase = async () => {
-    if (contract && selectedProduct) {
-      try {
-        await contract.methods.purchaseProduct(selectedProduct).send({
-          from: accounts[0],
-        });
+      if (contract && selectedProduct) {
+        try {
+            const product = await contract.methods.products(selectedProduct).call();
+            const productPrice = product.price;
+            const priceInWei = Web3.utils.toWei(productPrice.toString(), "ether");
+      
+            // 물건 구매 함수 호출
+            await contract.methods.purchaseProduct(selectedProduct).send({
+              from: accounts[0],
+              value: priceInWei,
+            });
+      
         // 물건 구매 후에는 물건 목록을 업데이트
         getProducts();
-        // Reward Amount 업데이트
-        const updatedRewardAmount = await contract.methods.getRewardAmount().call();
-        setRewardAmount(parseFloat(Web3.utils.fromWei(updatedRewardAmount.toString(), "ether")));
-        // LocalStorage 업데이트
-        window.localStorage.setItem('rewardAmount', parseFloat(Web3.utils.fromWei(updatedRewardAmount.toString(), "ether")).toString());
-        // window.location.reload();
+        window.location.reload();
       } catch (error) {
         console.error('Error purchasing product:', error);
       }
     }
   };
-  useEffect(() => {
-    const savedRewardAmount = localStorage.getItem('rewardAmount');
-    if (savedRewardAmount) {
-      setRewardAmount(parseFloat(savedRewardAmount));
-    }
-  }, [localStorage.getItem('rewardAmount')]);
-
-  useEffect(() => {
-    localStorage.removeItem('rewardAmount', rewardAmount.toString());
-    localStorage.setItem('rewardAmount', rewardAmount.toString());
-  }, [rewardAmount]);
-
 
   return (
     <div>
-        <button><Link to={'/donation'}>Donation</Link></button>
-        <p>Reward Amount: {parseFloat(Web3.utils.fromWei(rewardAmount.toString(), "ether"))} ETH</p>
+        <button><Link to={'/donation'} style={{textDecoration : "none"}}>기부</Link></button>
         <h2>Products</h2>
+        <p>Contract Balance: {parseFloat(Web3.utils.fromWei(contractBalance.toString(), "ether"))} ETH</p>
         <select onChange={handleProductChange}>
           <option value="">Select a product</option>
           {products.map((product) => (

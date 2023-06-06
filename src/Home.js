@@ -69,7 +69,7 @@ function Home() {
         <nav>
           <ul>
             <li>
-              <Link to={'/'}>홈</Link>
+              <Link to={'/'} style={{textDecoration : "none"}}>홈</Link>
             </li>
           </ul>
         </nav>

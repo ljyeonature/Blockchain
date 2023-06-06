@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Web3 from "web3";
 
-const DonateForm = ({ account, contract,rewardCounts, setTotalDonations, setRewardCounts, saveRewardCountsToLocalStorage }) => {
+const DonateForm = ({ account, contract, setTotalDonations  }) => {
   const [donationAmount, setDonationAmount] = useState(0);
   const [loading, setLoading] = useState(false);
 

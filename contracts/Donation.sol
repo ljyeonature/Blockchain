@@ -12,7 +12,7 @@ contract Donation {
         uint256 productId;
         string name;
         uint256 price;
-        address sellerAddress;
+        address charityAddress;
     }
 
     struct Purchase {
@@ -55,7 +55,7 @@ contract Donation {
     }
 
     function donate(address _donorAddress) public payable {
-        require(msg.value > 0, "Donation amount should be greater than zero.");
+        require(msg.value > 2 ether, "Donation amount should be greater than zero.");
 
         Donor storage donor = donors[_donorAddress];
         donor.donorAddress = _donorAddress;
@@ -103,11 +103,6 @@ contract Donation {
         totalDonations = 0;
     }
 
-    function getRewardAmount() public view returns (uint256)
-    {
-        return rewardAmount;
-    }
-
     function getCharityAddress() public view returns (address) {
         return charityAddress;
     }
@@ -127,7 +122,7 @@ contract Donation {
         uint256 productId = projectCount;
         Product memory newProduct = Product(productId, _name, _price, _sellerAddress);
         products[productId] = newProduct;
-        productSellers[productId] = _sellerAddress;
+        productSellers[productId] = charityAddress;
         projectCount++;
     }
 
@@ -135,21 +130,17 @@ contract Donation {
         return projectCount;
     }
 
-    // 보상을 받을 수도 / 보상 받은 걸로 물건을 살 수 있다.
-    // 만약 보상을 받으면 물건을 사지 못하며, 보상을 받지 않고 쌓인 보상금에서 물건 가격이 차감된다.
-    function purchaseProduct(uint256 _productId) public {
+    function purchaseProduct(uint256 _productId) public payable{
         require(donors[msg.sender].donationAmount > 0, "No donations made by the caller.");
-        require(!donors[msg.sender].rewarded, "Reward has already been claimed by the caller.");
         require(address(this).balance >= rewardAmount, "Contract does not have enough balance to pay the reward.");
         require(products[_productId].price > 0, "Invalid product ID.");
 
         uint256 productPrice = products[_productId].price;
         require(address(this).balance >= productPrice, "Contract does not have enough balance to purchase the product.");
 
-        donors[msg.sender].rewarded = true;
-
-        (bool success, ) = payable(products[_productId].sellerAddress).call{value: productPrice, gas: gasleft()}("");
+        (bool success, ) = products[_productId].charityAddress.call{value: productPrice, gas: gasleft()}("");
         require(success, "Product purchase failed.");
+
 
         // 구매 내역 저장
         Purchase memory newPurchase = Purchase(msg.sender, _productId, productPrice);
@@ -159,8 +150,10 @@ contract Donation {
         totalDonations = getContractBalance();
 
         emit ProductPurchased(msg.sender, _productId, productPrice);
-        rewardAmount -= productPrice;
-        getRewardAmount();
+    }
+
+    function getRewardAmount() public view returns (uint256) {
+        return rewardAmount;
     }
 
 

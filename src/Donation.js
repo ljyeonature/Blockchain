@@ -18,18 +18,10 @@ const Donation = () => {
   const [rewarded, setRewarded] = useState(false);
   const [metamaskAccount, setMetamaskAccount] = useState("");
   const [contractBalance, setContractBalance] = useState(0);
+  // eslint-disable-next-line
   const [projectCount, setProjectCount] = useState(0);
   const navigate = useNavigate();
-  const [rewardAmount, setRewardAmount] = useState(() => {
-    const savedRewardAmount = localStorage.getItem('rewardAmount');
-    return savedRewardAmount ? parseFloat(savedRewardAmount) : 0;
-  })
-
-  useEffect(() => {
-    localStorage.setItem('rewardAmount', rewardAmount.toString());
-  }, [rewardAmount]);
-
-  
+  const [rewardAmount, setRewardAmount] = useState(0);
   
   useEffect(() => {
     loadBlockchainData();
@@ -93,7 +85,7 @@ const Donation = () => {
         const product = await contract.methods.products(i).call();
         products.push(product);
       }
-
+  
       navigate('/purchase', { state: { products } });
     } catch (error) {
       console.error("Failed to fetch products:", error);
@@ -105,10 +97,12 @@ const Donation = () => {
     return <div>Loading...</div>;
   }
   
+  
   return (
     <div>
-      <button><Link to={'/'}>홈</Link></button>
-      <button onClick={handlePurchase}>상점</button>
+      <button><Link to={'/'} style={{ textDecoration : "none" }}>홈</Link></button>
+      {rewardAmount > 0 ? (<button onClick={handlePurchase}>상점</button>):null}
+      
       <h1>Donation App</h1>
       <p>Account: {account}</p>
       <p>Charity Address: {charityAddress}</p>
@@ -132,6 +126,7 @@ const Donation = () => {
         account={account}
         contract={contract}
         setTotalDonations={setTotalDonations}
+        setRewardAmount={setRewardAmount}
       />) : null
       
     }
