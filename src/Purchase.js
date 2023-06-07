@@ -79,24 +79,6 @@ const Purchase = () => {
     getAccounts();
   }, [web3]);
 
-  // 물건 목록 가져오기
-  const getProducts = async () => {
-    if (contract) {
-      try {
-        const productCount = await contract.methods.projectCount().call();
-        const products = [];
-
-        for (let i = 0; i < productCount; i++) {
-          const product = await contract.methods.products(i).call();
-          products.push(product);
-        }
-
-        setProducts(products);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      }
-    }
-  };
   useEffect(() => {
     // 물건 목록 가져오기
   const getProducts = async () => {
@@ -137,8 +119,6 @@ const Purchase = () => {
               value: priceInWei,
             });
       
-        // 물건 구매 후에는 물건 목록을 업데이트
-        getProducts();
         window.location.reload();
       } catch (error) {
         console.error('Error purchasing product:', error);
@@ -148,6 +128,7 @@ const Purchase = () => {
 
   return (
     <div>
+        <button><Link to={'/home'} style={{textDecoration : "none"}}>홈</Link></button>
         <button><Link to={'/donation'} style={{textDecoration : "none"}}>기부</Link></button>
         <h2>Products</h2>
         <p>Contract Balance: {parseFloat(Web3.utils.fromWei(contractBalance.toString(), "ether"))} ETH</p>

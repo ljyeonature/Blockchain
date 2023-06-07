@@ -62,6 +62,13 @@ function Home() {
       window.alert("Please Connect to MetaMask.");
     }
   };
+  const goToPurchasePage = () => {
+    if(isMetamaskConnected) {
+      navigate('/purchase');
+    } else {
+      window.alert("Please Connect to MetaMask.")
+    }
+  }
 
   return (
     <div>
@@ -83,6 +90,7 @@ function Home() {
           <p>2. Please push Button Logout to return Connect MetaMask.</p>
           <button onClick={logout}>Logout</button>
           <button onClick={goToDonationPage}>Go to Donation Page</button>
+          <button onClick={goToPurchasePage}>Go to Purchase Page</button>
         </div>
         ) : (
           <button onClick={walletConnect}>Connect Metamask</button>

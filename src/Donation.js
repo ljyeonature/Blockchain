@@ -101,7 +101,7 @@ const Donation = () => {
   return (
     <div>
       <button><Link to={'/'} style={{ textDecoration : "none" }}>홈</Link></button>
-      {rewardAmount > 0 ? (<button onClick={handlePurchase}>상점</button>):null}
+      <button onClick={handlePurchase}>상점</button>
       
       <h1>Donation App</h1>
       <p>Account: {account}</p>

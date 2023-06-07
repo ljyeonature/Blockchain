@@ -131,8 +131,6 @@ contract Donation {
     }
 
     function purchaseProduct(uint256 _productId) public payable{
-        require(donors[msg.sender].donationAmount > 0, "No donations made by the caller.");
-        require(address(this).balance >= rewardAmount, "Contract does not have enough balance to pay the reward.");
         require(products[_productId].price > 0, "Invalid product ID.");
 
         uint256 productPrice = products[_productId].price;
