@@ -1,4 +1,40 @@
 import React, { useState } from "react";
+
+const styles = {
+
+  form : {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  button: {
+    backgroundColor: '#000',
+    color: '#fff',
+    padding: '1em 2em',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    marginBottom: '1em',
+    textDecoration: 'none',
+    position:'relative',
+    top:'20px',
+  },
+  input: {
+    height: '30px',
+    marginLeft: '10px',
+    borderRadius:'1em',
+    textAlign : 'center',
+    marginTop:'10px',
+  }, 
+  heading: {
+    color: '#2c3e50',
+    textAlign:'center',
+    fontSize:'30px',
+  }, 
+};
+
+
+
 // 판매자(charity)가 물건 등록 폼
 const ProductForm = ({ account, contract, setProjectCount }) => {
   const [productName, setProductName] = useState("");
@@ -29,25 +65,27 @@ const ProductForm = ({ account, contract, setProjectCount }) => {
 
   return (
     <div>
-      <h3>Register a Product</h3>
-      <form onSubmit={handleSubmit}>
+      <h1 style={styles.heading}>Register a Product</h1>
+      <form onSubmit={handleSubmit} style={styles.form}>
         <div>
-          <label>Product Name:</label>
+          <label>Product Name</label>
           <input
             type="text"
             value={productName}
             onChange={(e) => setProductName(e.target.value)}
+            style={styles.input}
           />
         </div>
         <div>
-          <label>Product Price:</label>
+          <label>Product Price</label>
           <input
             type="number"
             value={productPrice}
             onChange={(e) => setProductPrice(e.target.value)}
+            style={styles.input}
           />
         </div>
-        <button type="submit">Register</button>
+        <button type="submit" style={styles.button}>Register</button>
       </form>
     </div>
   );

@@ -1,6 +1,31 @@
 import React, { useState } from "react";
 import Web3 from "web3";
 
+const styles = {
+  donateform : {
+    position:'relative',
+    left:'70px',
+  },
+  button: {
+    backgroundColor: '#000',
+    color: '#fff',
+    padding: '1em 2em',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    marginBottom: '1em',
+    textDecoration: 'none',
+  },
+  input: {
+    height: '30px',
+    marginRight: '10px',
+    borderRadius:'1em',
+    textAlign : 'center',
+    marginTop:'10px',
+  },  
+};
+
+
 const DonateForm = ({ account, contract, setTotalDonations  }) => {
   const [donationAmount, setDonationAmount] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -29,13 +54,14 @@ const DonateForm = ({ account, contract, setTotalDonations  }) => {
   }
 
   return (
-    <div>
+    <div style={styles.donateform}>
       <input
         type="number"
         value={donationAmount}
         onChange={(e) => setDonationAmount(e.target.value)}
+        style={styles.input}
       />
-      <button onClick={donate}>Donate</button>
+      <button onClick={donate} style={styles.button}>Donate</button>
     </div>
   );
 };

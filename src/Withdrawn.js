@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import Web3 from "web3";
 import DonationContract from "./contracts/Donation.json";
-import DonateForm from "./DonateForm";
-import RewardClaim from "./RewardClaim";
+import WithdrawForm from "./WithdrawForm";
+import ProductForm from "./ProductForm";
 
 const styles = {
   container: {
@@ -30,7 +30,6 @@ const styles = {
   footer: {
     height:'20vh',
     position:'relative',
-    bottom:'20px',
   },
   rowdiv: {
     alignItems:'center',
@@ -72,11 +71,9 @@ const styles = {
     padding: '0.5em 1em',
     border: '1px solid #000',
   },
-
 };
 
-
-const Donation = () => {
+const Withdrawn = () => {
   const [account, setAccount] = useState("");
   const [contract, setContract] = useState(null);
   const [totalDonations, setTotalDonations] = useState(0);
@@ -84,10 +81,12 @@ const Donation = () => {
   const [loading, setLoading] = useState(false);
   const [charityAddress, setCharityAddress] = useState("");
   const [receiverAddress, setReceiverAddress] = useState("");
-  const [rewarded, setRewarded] = useState(false);
-   // eslint-disable-next-line
+  
   const [metamaskAccount, setMetamaskAccount] = useState("");
+  // eslint-disable-next-line
+  const [projectCount, setProjectCount] = useState(0);
   const navigate = useNavigate();
+  // eslint-disable-next-line
   const [rewardAmount, setRewardAmount] = useState(0);
   
   useEffect(() => {
@@ -154,12 +153,9 @@ const Donation = () => {
       console.error("Failed to fetch products:", error);
     }
   }
-
-  
   if (loading) {
     return <div>Loading...</div>;
   }
-  
   
   return (
     <div style={styles.container}>
@@ -202,9 +198,11 @@ const Donation = () => {
             </tbody>
           </table>
       </header>
+
       <section style={styles.section}> 
+     
           <div style={styles.rowdiv}>
-            <h1 style={styles.heading}>Donate</h1>
+            <h1 style={styles.heading}>Widrawn Donations</h1>
             <p style={styles.paragraph}>
               Total Donations:{" "}
               {parseFloat(Web3.utils.fromWei(totalDonations.toString(), "ether"))} ETH
@@ -213,40 +211,32 @@ const Donation = () => {
               Withdrawn Amount:{" "}
               {parseFloat(Web3.utils.fromWei(withdrawnAmount.toString(), "ether"))} ETH
               </p>
-            {/* 기부하기 - 기부자 */}
-            <DonateForm
+            {/* 인출하기 - 자선단체 */}
+            {metamaskAccount === charityAddress ?
+            (<WithdrawForm
               account={account}
               contract={contract}
-              setTotalDonations={setTotalDonations}
-              setRewardAmount={setRewardAmount}
-            />
+              setWithdrawnAmount={setWithdrawnAmount}
+              receiverAddress={receiverAddress}
+            />) : null      
+            }
           </div>
-          <div style={styles.rowdiv}>
-          {/* 보상받기 - 기부자 : 기부할 때마다 1 ether씩 */}
-           <div>
-              <h1 style={styles.heading}>Claim Reward</h1>
-              <p style={styles.paragraph}>Reward Amount: {parseFloat(Web3.utils.fromWei(rewardAmount.toString(), "ether"))} ETH</p>
-                {!rewarded ? (
-                  <RewardClaim
-                    account={account}
-                    contract={contract}
-                    setRewardAmount={setRewardAmount}
-                    setRewarded={setRewarded}
-                  />
-                ) : (
-                  <div>
-                    <p style={styles.paragraph}>Reward claimed.</p>
-                  </div>
-                )}
-              </div>
+        <div>
+          {/* 물건 등록하기 - 판매자 */}
+          {metamaskAccount === charityAddress ? (
+              <ProductForm account={account} contract={contract} setProjectCount={setProjectCount} />
+            ) : null
+          }
         </div>
       </section>
       <footer style={styles.footer}>
+        <div style={styles.buttonContainer}>
           <Link to={'/'} style={{ textDecoration : "none", color:'#000' }}><button style={styles.button}>Home</button></Link>
           <button onClick={handlePurchase} style={styles.button}>Market</button>
+        </div>
       </footer>
     </div>
   );
 };
 
-export default Donation;
+export default Withdrawn;

@@ -1,5 +1,32 @@
 import React, {useState} from "react";
 
+const styles = {
+  container: {
+    fontFamily: 'Arial, sans-serif',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100vh',
+    padding: '2em',
+    background: '#f5f5f5',
+  },
+  button: {
+    display:'inline',
+    backgroundColor: '#000',
+    color: '#fff',
+    padding: '1em 2em',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    marginBottom: '1em',
+    textDecoration: 'none',
+    position:'relative',
+    left:'150px',
+    top:'10px',
+  },
+};
+
 
 const RewardClaim = ({ account, contract, setRewardAmount, setRewarded }) => {
     const [loading, setLoading] = useState(false);
@@ -24,7 +51,7 @@ const RewardClaim = ({ account, contract, setRewardAmount, setRewarded }) => {
   
     return (
       <div>
-        <button onClick={claimReward}>Claim Reward</button>
+        <button onClick={claimReward} style={styles.button}>Reward</button>
       </div>
     );
   };

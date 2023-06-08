@@ -1,5 +1,23 @@
 import React, {useState} from "react";
 
+const styles = {
+
+  button: {
+    backgroundColor: '#000',
+    color: '#fff',
+    padding: '1em 2em',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    marginBottom: '1em',
+    textDecoration: 'none',
+    position:'relative',
+    left:'120px',
+  },
+
+
+};
+
 const WithdrawForm = ({ account, contract, setWithdrawnAmount, receiverAddress }) => {
     const [loading, setLoading] = useState(false);
   
@@ -24,7 +42,7 @@ const WithdrawForm = ({ account, contract, setWithdrawnAmount, receiverAddress }
   
     return (
       <div>
-        <button onClick={withdrawDonations}>Withdraw Donations</button>
+        <button onClick={withdrawDonations} style={styles.button}>Withdraw Donations</button>
       </div>
     );
   };

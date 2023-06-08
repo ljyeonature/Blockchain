@@ -3,6 +3,82 @@ import { Link } from 'react-router-dom';
 import Web3 from 'web3';
 import DonationContract from './contracts/Donation.json';
 
+const styles = {
+  container: {
+    fontFamily: 'Arial, sans-serif',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: '100vh', 
+    padding: '2em',
+    background: 'white', 
+    position:'relative',
+    bottom:'50px',
+  },
+  button: {
+    backgroundColor: '#000',
+    color: '#fff',
+    padding: '1em 2em',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    marginBottom: '1em',
+    textDecoration: 'none',
+    margin:'10px 10px',
+  },
+  purchasebutton: {
+    backgroundColor: '#000',
+    color: '#fff',
+    padding: '1em 2em',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    marginBottom: '1em',
+    textDecoration: 'none',
+    margin:'10px 10px',
+    position:'relative',
+    bottom:'60px',
+    left:'165px',
+
+  },
+  buttonContainer: {
+    position:'absolute',
+    bottom:'130px',
+  },
+  rewardAmount: {
+    color: '#34495e',
+    marginBottom: '0.5em',
+  },
+  heading: {
+    color: '#2c3e50',
+    marginBottom: '1em',
+  },
+  select: {
+    width:'200px',
+    height:'30px',
+    marginBottom: '1em',
+    borderRadius:'10px',
+    textAlign:'center',
+  },
+  table: {
+    width: '100%',
+    borderCollapse: 'collapse',
+  },
+  tableHeader: {
+    backgroundColor: 'black',
+    color: '#fff',
+    padding: '0.5em 1em',
+    border: '1px solid #000',
+    
+  },
+  tableCell: {
+    padding: '0.5em 1em',
+    border: '1px solid #000',
+  },
+};
+
+
 const Purchase = () => {
   const [web3, setWeb3] = useState(null);
   const [contract, setContract] = useState(null);
@@ -10,8 +86,9 @@ const Purchase = () => {
   const [products, setProducts] = useState([]);
   const [purchases, setPurchases] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [contractBalance, setContractBalance] = useState(0);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  // eslint-disable-next-line
+  const [itemsPerPage, setItemsPerPage] = useState(5);
 
   useEffect(() => {
     // 웹3 인스턴스 생성
@@ -50,10 +127,6 @@ const Purchase = () => {
         purchases.push(purchase);
         }
         setPurchases(purchases);
-
-        const balance = await contract.methods.getContractBalance().call();
-        setContractBalance(balance);
-
 
         } catch (error) {
           console.error('Error initializing contract:', error);
@@ -126,13 +199,42 @@ const Purchase = () => {
     }
   };
 
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+  // 구매목록 페이지 기능
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = purchases.slice(indexOfFirstItem, indexOfLastItem);
+
+  const Pagination = () => {
+    const pageNumbers = Math.ceil(purchases.length / itemsPerPage);
+
+    return (
+      <div>
+        {Array.from({ length: pageNumbers }, (_, index) => index + 1).map(
+          (pageNumber) => (
+            <button
+              key={pageNumber}
+              onClick={() => handlePageChange(pageNumber)}
+              style={
+                pageNumber === currentPage
+                  ? { backgroundColor: 'black', margin: '0.5em', color:'white' }
+                  : { backgroundColor: 'white', margin: '0.5em' }
+              }
+            >
+              {pageNumber}
+            </button>
+          )
+        )}
+      </div>
+    );
+  };
+
   return (
-    <div>
-        <button><Link to={'/home'} style={{textDecoration : "none"}}>홈</Link></button>
-        <button><Link to={'/donation'} style={{textDecoration : "none"}}>기부</Link></button>
-        <h2>Products</h2>
-        <p>Contract Balance: {parseFloat(Web3.utils.fromWei(contractBalance.toString(), "ether"))} ETH</p>
-        <select onChange={handleProductChange}>
+    <div style={styles.container}>
+        <h1 style={styles.heading}>Products</h1>
+        <select onChange={handleProductChange} style={styles.select}>
           <option value="">Select a product</option>
           {products.map((product) => (
             <option key={product.productId} value={product.productId}>
@@ -140,27 +242,32 @@ const Purchase = () => {
             </option>
           ))}
         </select>
-        <button onClick={handlePurchase}>Purchase</button>
+        <button onClick={handlePurchase} style={styles.purchasebutton}>Purchase</button>
 
-        <h1>Purchase History</h1>
-        <table>
+        <h1 style={styles.heading}>Purchase History</h1>
+        <table style={styles.table}>
             <thead>
             <tr>
-                <th>Buyer</th>
-                <th>Product ID</th>
-                <th>Price</th>
+                <th style={styles.tableHeader}>Buyer</th>
+                <th style={styles.tableHeader}>Product ID</th>
+                <th style={styles.tableHeader}>Price</th>
             </tr>
             </thead>
             <tbody>
-            {purchases.map((purchase, index) => (
+            {currentItems.map((purchase, index) => (
                 <tr key={index}>
-                <td>{purchase.buyer}</td>
-                <td>{purchase.productId}</td>
-                <td>{purchase.purchaseAmount}</td>
+                <td style={styles.tableCell}>{purchase.buyer}</td>
+                <td style={styles.tableCell}>{purchase.productId}</td>
+                <td style={styles.tableCell}>{purchase.purchaseAmount}</td>
                 </tr>
             ))}
             </tbody>
         </table>
+        <Pagination/>
+        <div style={styles.buttonContainer}>
+          <Link to={'/'} style={{textDecoration : "none"}}><button style={styles.button}>Home</button></Link>
+          <Link to={'/donation'} style={{textDecoration : "none"}}><button style={styles.button}>Donation</button></Link>
+        </div>
     </div>
   );
 };
