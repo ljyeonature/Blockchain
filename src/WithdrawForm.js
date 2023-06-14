@@ -12,7 +12,9 @@ const styles = {
     marginBottom: '1em',
     textDecoration: 'none',
     position:'relative',
-    left:'120px',
+    left:'95px',
+    top:'10px',
+    fontSize:'18px',
   },
 
 

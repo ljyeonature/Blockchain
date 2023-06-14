@@ -15,13 +15,15 @@ const styles = {
     cursor: 'pointer',
     marginBottom: '1em',
     textDecoration: 'none',
+    fontSize:'15px',
   },
   input: {
-    height: '30px',
+    height: '32px',
     marginRight: '10px',
     borderRadius:'1em',
     textAlign : 'center',
     marginTop:'10px',
+    fontSize:'18px',
   },  
 };
 

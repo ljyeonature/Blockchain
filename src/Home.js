@@ -16,7 +16,7 @@ const styles = {
   title: {
     color: '#000',
     textShadow: '2px 2px 4px rgba(255,255,255,0.7)',
-    fontSize: '2em',
+    fontSize: '50px',
   },
   link: {
     textDecoration: 'none',
@@ -190,11 +190,11 @@ function Home() {
 
   return (
     <div style={styles.container}>
-      <h1 style={styles.title}>MetaMask Donation Applicaiton</h1>
+      <h1 style={styles.title}>Donation</h1>
       <nav>
         <ul style={styles.navList}>
           <li style={styles.navListItem}>
-            <Link to={'/'} style={{ textDecoration: "none", color: "#000" }}>Home</Link>
+            <Link to={'/'} style={{ textDecoration: "none", color: "#000", fontSize:"20px" }}>Home</Link>
           </li>
         </ul>
       </nav>
@@ -202,10 +202,10 @@ function Home() {
       <div>
         {isMetamaskConnected ? 
           (<div style={styles.buttonContainer}>
-            <p>Metamask is connected.</p>
-            <p>Connected Account: {userAccount.Account}</p>
-            <p>1. Please disconnect <strong>manually</strong> from MetaMask.</p>
-            <p>2. Please push the Logout button to return to Connect MetaMask.</p>
+            <p style={{fontSize:"22px"}}>Metamask is connected.</p>
+            <p style={{fontSize:"22px"}}>Connected Account: {userAccount.Account}</p>
+            <p style={{fontSize:"22px"}}>1. Please disconnect <strong>manually</strong> from MetaMask.</p>
+            <p style={{fontSize:"22px"}}>2. Please push the Logout button to return to Connect MetaMask.</p>
             <button onClick={logout} style={styles.button}>Logout</button>
             <div style={{ marginLeft: '1em', display: 'inline' }}>
               {localStorage.getItem("isConnected") === charityAddress.toLowerCase() ? 

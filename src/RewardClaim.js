@@ -24,6 +24,7 @@ const styles = {
     position:'relative',
     left:'150px',
     top:'10px',
+    fontSize:'18px',
   },
 };
 

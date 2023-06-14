@@ -17,20 +17,26 @@ const styles = {
     marginBottom: '1em',
     textDecoration: 'none',
     position:'relative',
-    top:'20px',
+    top:'35px',
+    fontSize:'18px',
   },
   input: {
+    width:'210px',
     height: '30px',
     marginLeft: '10px',
     borderRadius:'1em',
     textAlign : 'center',
     marginTop:'10px',
+    fontSize:'18px',
   }, 
   heading: {
     color: '#2c3e50',
     textAlign:'center',
-    fontSize:'30px',
+    fontSize:'40px',
   }, 
+  label : {
+    fontSize:'20px',
+  },
 };
 
 
@@ -68,7 +74,7 @@ const ProductForm = ({ account, contract, setProjectCount }) => {
       <h1 style={styles.heading}>Register a Product</h1>
       <form onSubmit={handleSubmit} style={styles.form}>
         <div>
-          <label>Product Name</label>
+          <label style={styles.label}>Product Name</label>
           <input
             type="text"
             value={productName}
@@ -77,7 +83,7 @@ const ProductForm = ({ account, contract, setProjectCount }) => {
           />
         </div>
         <div>
-          <label>Product Price</label>
+          <label style={styles.label}>Product Price</label>
           <input
             type="number"
             value={productPrice}

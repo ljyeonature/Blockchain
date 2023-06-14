@@ -26,6 +26,7 @@ const styles = {
     marginBottom: '1em',
     textDecoration: 'none',
     margin:'10px 10px',
+    fontSize:'18px',
   },
   purchasebutton: {
     backgroundColor: '#000',
@@ -38,8 +39,9 @@ const styles = {
     textDecoration: 'none',
     margin:'10px 10px',
     position:'relative',
-    bottom:'60px',
-    left:'165px',
+    bottom:'70px',
+    left:'200px',
+    fontSize:'15px',
 
   },
   buttonContainer: {
@@ -53,16 +55,20 @@ const styles = {
   heading: {
     color: '#2c3e50',
     marginBottom: '1em',
+    fontSize:'40px',
   },
   select: {
-    width:'200px',
-    height:'30px',
+    width:'250px',
+    height:'40px',
     marginBottom: '1em',
     borderRadius:'10px',
     textAlign:'center',
+    fontSize:'15px',
   },
   table: {
-    width: '100%',
+    textAlign:'center',
+    fontSize:'18px',
+    width: '80%',
     borderCollapse: 'collapse',
   },
   tableHeader: {
@@ -235,7 +241,7 @@ const Purchase = () => {
     <div style={styles.container}>
         <h1 style={styles.heading}>Products</h1>
         <select onChange={handleProductChange} style={styles.select}>
-          <option value="">Select a product</option>
+          <option value="" style={styles.option}>Select a product</option>
           {products.map((product) => (
             <option key={product.productId} value={product.productId}>
               {product.name} - {product.price} ETH
@@ -249,6 +255,7 @@ const Purchase = () => {
             <thead>
             <tr>
                 <th style={styles.tableHeader}>Buyer</th>
+                <th style={styles.tableHeader}>Product Name</th>
                 <th style={styles.tableHeader}>Product ID</th>
                 <th style={styles.tableHeader}>Price</th>
             </tr>
@@ -257,6 +264,7 @@ const Purchase = () => {
             {currentItems.map((purchase, index) => (
                 <tr key={index}>
                 <td style={styles.tableCell}>{purchase.buyer}</td>
+                <td style={styles.tableCell}>{purchase.productName}</td>
                 <td style={styles.tableCell}>{purchase.productId}</td>
                 <td style={styles.tableCell}>{purchase.purchaseAmount}</td>
                 </tr>
@@ -266,7 +274,6 @@ const Purchase = () => {
         <Pagination/>
         <div style={styles.buttonContainer}>
           <Link to={'/'} style={{textDecoration : "none"}}><button style={styles.button}>Home</button></Link>
-          <Link to={'/donation'} style={{textDecoration : "none"}}><button style={styles.button}>Donation</button></Link>
         </div>
     </div>
   );

@@ -17,34 +17,41 @@ const styles = {
   },
   header: {
     height:'40vh',
-    paddingTop:'80px',
     paddingBottom:'0',
+    position:'relative',
+    top:'120px',
   },
   section: {
     margin: '20px 0',
     height:'60vh',
     width:'412px',
-    marginBottom:'30px',
-
+    position:'relative',
+    bottom:"80px",
   },
   footer: {
     height:'20vh',
     position:'relative',
-    bottom:'20px',
+    bottom:"50px",
+    left:'15px',
   },
   rowdiv: {
     alignItems:'center',
     justifyContent:'center',
   },
+  rewarddiv: {
+    position:'relative',
+    top:'20px',
+  },
   heading: {
     color: '#2c3e50',
     textAlign:'center',
-    fontSize:'30px',
+    fontSize:'40px',
   },
   paragraph: {
     color: '#34495e',
     marginBottom: '0.5em',
     textAlign:'center',
+    fontSize:'22px',
   },
   button: {
     backgroundColor: 'black',
@@ -56,21 +63,26 @@ const styles = {
     marginBottom: '1em',
     textDecoration: 'none',
     margin:'10px',
+    fontSize:'18px',
   },
 
   table: {
     width: '100%',
-    borderCollapse: 'collapse',
+    borderCollapse: 'separate',
+    borderSpacing:'5px 0'
   },
   tableHeader: {
     backgroundColor: 'black',
     color: '#fff',
     padding: '0.5em 1em',
     border: '1px solid #000',
+    fontSize:'15px',
+
   },
   tableCell: {
     padding: '0.5em 1em',
     border: '1px solid #000',
+    fontSize:'15px',
   },
 
 };
@@ -164,39 +176,18 @@ const Donation = () => {
   return (
     <div style={styles.container}>
       <header style={styles.header}>
-          <h1 style={styles.heading}>Address</h1>
           <table style={styles.table}>
             <thead>
               <tr>
                 <th style={styles.tableHeader}>Connected Account</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style={styles.tableCell}>{account}</td>
-              </tr>
-            </tbody>
-          </table>
-          <table style={styles.table}>
-            <thead>
-              <tr>
                 <th style={styles.tableHeader}>Charity Account</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style={styles.tableCell}>{charityAddress}</td>
-              </tr>
-            </tbody>
-          </table>
-          <table style={styles.table}>
-            <thead>
-              <tr>
                 <th style={styles.tableHeader}>Receiver Account</th>
               </tr>
             </thead>
             <tbody>
               <tr>
+                <td style={styles.tableCell}>{account}</td>
+                <td style={styles.tableCell}>{charityAddress}</td>
                 <td style={styles.tableCell}>{receiverAddress}</td>
               </tr>
             </tbody>
@@ -223,7 +214,7 @@ const Donation = () => {
           </div>
           <div style={styles.rowdiv}>
           {/* 보상받기 - 기부자 : 기부할 때마다 1 ether씩 */}
-           <div>
+           <div style={styles.rewarddiv}>
               <h1 style={styles.heading}>Claim Reward</h1>
               <p style={styles.paragraph}>Reward Amount: {parseFloat(Web3.utils.fromWei(rewardAmount.toString(), "ether"))} ETH</p>
                 {!rewarded ? (

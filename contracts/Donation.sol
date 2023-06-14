@@ -17,6 +17,7 @@ contract Donation {
 
     struct Purchase {
         address buyer;
+        string productName;
         uint256 productId;
         uint256 purchaseAmount;
     }
@@ -129,10 +130,16 @@ contract Donation {
     function getProductsCount() public view returns (uint) {
         return projectCount;
     }
+    
+    function getProduct(uint256 _productId) public view returns (string memory, uint256, address) {
+        require(_productId < projectCount, "Invalid product ID.");
+        return (products[_productId].name, products[_productId].price, products[_productId].charityAddress);
+    }
 
     function purchaseProduct(uint256 _productId) public payable{
         require(products[_productId].price > 0, "Invalid product ID.");
 
+        string memory productName = products[_productId].name;
         uint256 productPrice = products[_productId].price;
         require(address(this).balance >= productPrice, "Contract does not have enough balance to purchase the product.");
 
@@ -141,7 +148,7 @@ contract Donation {
 
 
         // 구매 내역 저장
-        Purchase memory newPurchase = Purchase(msg.sender, _productId, productPrice);
+        Purchase memory newPurchase = Purchase(msg.sender, productName, _productId, productPrice);
         purchases[purchaseCount] = newPurchase;
         purchaseCount++;
 
