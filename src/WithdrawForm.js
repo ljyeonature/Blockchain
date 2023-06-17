@@ -3,7 +3,7 @@ import React, {useState} from "react";
 const styles = {
 
   button: {
-    backgroundColor: '#000',
+    backgroundColor: '#333333',
     color: '#fff',
     padding: '1em 2em',
     border: 'none',

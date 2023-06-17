@@ -4,6 +4,7 @@ import Home from './Home';
 import Donation from "./Donation";
 import Purchase from "./Purchase";
 import Withdrawn from "./Withdrawn";
+import PurchaseList from "./PurchaseList";
 
 function App() {
   
@@ -16,6 +17,7 @@ function App() {
             <Route path="/donation" element={<Donation/>}/>
             <Route path="/withdrawn" element={<Withdrawn/>}/>
             <Route path="/purchase" element={<Purchase/>} />
+            <Route path="/purchaseList" element={<PurchaseList/>} />
           </Routes>
         </Router>
       

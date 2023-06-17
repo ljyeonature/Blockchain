@@ -1,8 +1,7 @@
-import React, {useState} from "react";
+import React from "react";
 
 const styles = {
   container: {
-    fontFamily: 'Arial, sans-serif',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -21,19 +20,17 @@ const styles = {
     cursor: 'pointer',
     marginBottom: '1em',
     textDecoration: 'none',
-    position:'relative',
-    left:'150px',
-    top:'10px',
-    fontSize:'18px',
+    position:'absolute',
+    top: '70px',
+    left:'1190px',
+    fontSize:'15px',
+    width:'430px',
   },
 };
 
 
 const RewardClaim = ({ account, contract, setRewardAmount, setRewarded }) => {
-    const [loading, setLoading] = useState(false);
-  
     const claimReward = async () => {
-      setLoading(true);
       if (contract) {
         try {
           await contract.methods.claimReward().send({ from: account });
@@ -44,12 +41,7 @@ const RewardClaim = ({ account, contract, setRewardAmount, setRewarded }) => {
           console.error(error);
         }
       }
-      setLoading(false);
     };
-    if (loading) {
-        return <div>Loading...</div>;
-      }
-  
     return (
       <div>
         <button onClick={claimReward} style={styles.button}>Reward</button>

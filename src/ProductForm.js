@@ -8,7 +8,7 @@ const styles = {
     alignItems: 'center',
   },
   button: {
-    backgroundColor: '#000',
+    backgroundColor: '#333333',
     color: '#fff',
     padding: '1em 2em',
     border: 'none',
@@ -18,6 +18,7 @@ const styles = {
     textDecoration: 'none',
     position:'relative',
     top:'35px',
+    left:'20px',
     fontSize:'18px',
   },
   input: {
@@ -30,7 +31,7 @@ const styles = {
     fontSize:'18px',
   }, 
   heading: {
-    color: '#2c3e50',
+    color: 'black',
     textAlign:'center',
     fontSize:'40px',
   }, 
@@ -88,7 +89,7 @@ const ProductForm = ({ account, contract, setProjectCount }) => {
             type="number"
             value={productPrice}
             onChange={(e) => setProductPrice(e.target.value)}
-            style={styles.input}
+            style={{...styles.input, position:'relative', left:'5px'}}
           />
         </div>
         <button type="submit" style={styles.button}>Register</button>

@@ -4,6 +4,7 @@ import Web3 from 'web3';
 import DonationContract from './contracts/Donation.json';
 import hug from './images/hug.jpg';
 
+
 const styles = {
   container: {
     display: 'flex',
@@ -81,7 +82,7 @@ const styles = {
     fontSize:'18px',
   },
   purchasebutton: {
-    backgroundColor: '#000',
+    backgroundColor: '#4BA664',
     color: '#fff',
     padding: '1em 2em',
     border: 'none',
@@ -93,7 +94,7 @@ const styles = {
     fontSize:'15px',
     position:'absolute',
     top:'287px',
-    right:'480px',
+    right:'720px',
 
   },
   buttonContainer: {
@@ -105,26 +106,22 @@ const styles = {
     marginBottom: '0.5em',
   },
   heading: {
-    color: 'black',
-    // textAlign:'center',
+    color: '#2c3e50',
+    marginBottom: '1em',
     fontSize:'40px',
-    position:'relative',
-    right:'660px',
-    top:'35px',
-    borderBottom:'5px solid rgba(66, 146, 88, 0.9)',
+    position:'absolute',
+    top:'200px'
   },
   headingHistory: {
-    color: 'black',
-    // textAlign:'center',
+    color: '#2c3e50',
+    marginBottom: '1em',
     fontSize:'40px',
-    position:'relative',
-    right:'587px',
-    top:'30px',
-    borderBottom:'5px solid rgba(66, 146, 88, 0.9)',
+    position:'absolute',
+    top:'250px'
   },
- 
+  
   select: {
-    width:'500px',
+    width:'250px',
     height:'40px',
     marginBottom: '1em',
     borderRadius:'10px',
@@ -140,10 +137,11 @@ const styles = {
     width: '80%',
     borderCollapse: 'collapse',
     position:'absolute',
-    top:'550px',
+    top:'380px',
   },
+  
   tableHeader: {
-    backgroundColor: '#333333',
+    backgroundColor: 'black',
     color: '#fff',
     padding: '0.5em 1em',
     border: '1px solid #000',
@@ -155,16 +153,18 @@ const styles = {
   },
 };
 
-const Purchase = () => {
+const PurchaseList = () => {
   const [web3, setWeb3] = useState(null);
   const [contract, setContract] = useState(null);
+  // eslint-disable-next-line
   const [accounts, setAccounts] = useState([]);
+  // eslint-disable-next-line
   const [products, setProducts] = useState([]);
   const [purchases, setPurchases] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   // eslint-disable-next-line
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  // eslint-disable-next-line
   const [charityAddress, setCharityAddress] = useState('');
 
 
@@ -254,49 +254,20 @@ const Purchase = () => {
     getProducts();
   }, [contract]);
   
-
-  const handleProductChange = (event) => {
-    setSelectedProduct(event.target.value);
-  };
-  
-  const handlePurchase = async () => {
-      if (contract && selectedProduct) {
-        try {
-            const product = await contract.methods.products(selectedProduct).call();
-            const productPrice = product.price;
-            const priceInWei = Web3.utils.toWei(productPrice.toString(), "ether");
-      
-            // 물건 구매 함수 호출
-            await contract.methods.purchaseProduct(selectedProduct).send({
-              from: accounts[0],
-              value: priceInWei,
-            });
-      
-        window.location.reload();
-      } catch (error) {
-        console.error('Error purchasing product:', error);
-      }
-    }
-  };
-   // 현재 계정의 구매 내역 필터링
-   const filteredPurchases = purchases.filter(
-    (purchase) => purchase.buyer === accounts[0]
-  );
-
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
   // 구매목록 페이지 기능
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredPurchases.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = purchases.slice(indexOfFirstItem, indexOfLastItem);
 
   const Pagination = () => {
-    // const pageNumbers = Math.ceil(purchases.length / itemsPerPage);
+    const pageNumbers = Math.ceil(purchases.length / itemsPerPage);
 
     return (
-      <div style={{position:'absolute', bottom:'100px'}}>
-        {Array.from({ length: Math.ceil(filteredPurchases.length / itemsPerPage) }, (_, index) => index + 1).map(
+      <div style={{position:'absolute', bottom:'50px'}}>
+        {Array.from({ length: pageNumbers }, (_, index) => index + 1).map(
           (pageNumber) => (
             <button
               key={pageNumber}
@@ -325,37 +296,11 @@ const Purchase = () => {
             <li style={styles.navListItem}>
               <Link to={'/'} style={{ textDecoration: "none", position:'absolute', top:'0px', right:'125px'}}><button style={{...styles.navButton}}>Home</button></Link>
             </li>
-            {localStorage.getItem('isConnected') === charityAddress.toLowerCase() ?
-            (
-              <div>
-              <li style={styles.navListItem}>
-                <Link to={'/withdrawn'}><button onClick={handlePurchase} style={styles.navButton}>Back</button></Link>
-              </li>
-            </div>
-            ) : (
-              <div>
-              <li style={styles.navListItem}>
-                <Link to={'/donation'}><button onClick={handlePurchase} style={styles.navButton}>Back</button></Link>
-              </li>
-            </div>
-            ) }
+            <li style={styles.navListItem}>
+              <Link to={'/withdrawn'} style={styles.navButton}>Back</Link>
+            </li>
           </ul>
         </nav>
-        {localStorage.getItem('isConnected') === charityAddress.toLowerCase() ?
-        null : (
-          <div style={styles.container}>
-            <h1 style={styles.heading}>Products</h1>
-            <select onChange={handleProductChange} style={styles.select}>
-              <option value="" style={styles.option}>Select a product</option>
-              {products.map((product) => (
-                <option key={product.productId} value={product.productId}>
-                  {product.name} - {product.price} ETH
-                </option>
-              ))}
-            </select>
-            <button onClick={handlePurchase} style={styles.purchasebutton}>Purchase</button>
-          </div>
-        )}
         <div style={styles.container}>
           <h1 style={styles.headingHistory}>Purchase History</h1>
           <table style={styles.table}>
@@ -387,4 +332,4 @@ const Purchase = () => {
   );
 };
 
-export default Purchase;
+export default PurchaseList;

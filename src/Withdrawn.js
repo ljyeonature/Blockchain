@@ -1,37 +1,33 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Web3 from "web3";
 import DonationContract from "./contracts/Donation.json";
 import WithdrawForm from "./WithdrawForm";
 import ProductForm from "./ProductForm";
+import hug from './images/hug.jpg';
+
 
 const styles = {
-  container: {
-    fontFamily: 'Arial, sans-serif',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height:'100vh',
-    background: 'white',
-  },
   header: {
     height:'40vh',
     paddingBottom:'0',
-    position:'relative',
-    top:'100px',
+    position:'absolute',
+    top:'200px',
+    left:'310px'
   },
   section: {
     margin: '20px 0',
     height:'60vh',
     width:'412px',
-    position:'relative',
-    bottom:"80px",
+    position:'absolute',
+    top:"280px",
+    left:"750px"
   },
   footer: {
     height:'20vh',
     position:'relative',
     bottom:"50px",
+    left:'15px',
   },
   rowdiv: {
     alignItems:'center',
@@ -42,29 +38,27 @@ const styles = {
     top:'20px',
   },
   heading: {
-    color: '#2c3e50',
+    color: 'black',
     textAlign:'center',
     fontSize:'40px',
   },
   paragraph: {
-    color: '#34495e',
+    color: 'black',
     marginBottom: '0.5em',
     textAlign:'center',
     fontSize:'22px',
   },
   button: {
-    backgroundColor: 'black',
+    backgroundColor: '#333333',
     color: 'white',
     padding: '1em 3.5em',
-    border: '1px solid black',
+    border:'none',
     borderRadius: '5px',
     cursor: 'pointer',
     marginBottom: '1em',
     textDecoration: 'none',
     margin:'10px',
     fontSize:'18px',
-    position:'relative',
-    top:'15px',
   },
 
   table: {
@@ -85,6 +79,72 @@ const styles = {
     border: '1px solid #000',
     fontSize:'15px',
   },
+  container: {
+    color: 'black',
+    fontWeight: 'bold',
+    display: 'flex',
+    alignItems: 'center',
+    position: 'fixed',
+    top: '0',
+    left: '0',
+    right: '0',
+    justifyContent: 'flex-end',
+  },
+  title: {
+    color: 'black',
+    textShadow: '2px 2px 4px rgba(255,255,255,0.7)',
+    fontSize: '50px',
+    position: 'relative',
+    right: '700px',
+  },
+  link: {
+    textDecoration: 'none',
+    color: '#000',
+    backgroundColor: '#fff',
+    border: '2px solid #000',
+    borderRadius: '10px',
+    padding: '10px 20px',
+    fontSize: '20px',
+    transition: '0.3s',
+    ':hover': {
+      backgroundColor: '#000',
+      color: '#fff',
+    },
+  },
+  navButton: {
+    backgroundColor: '#429258',
+    padding: '10px 15px',
+    color: '#fff',
+    border: '5px solid #429258',
+    borderRadius: '5px',
+    fontSize: '20px',
+    fontWeight: 'bolder',
+    cursor: 'pointer',
+    textDecoration: 'none',
+    position: 'absolute',
+    right: '50px',
+    top: '68px',
+    transition: '0.3s',
+    ':hover': {
+      border: 'none',
+    },
+  },
+
+  navList: {
+    listStyleType: 'none',
+    padding: 0,
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  navListItem: {
+    padding: '10px 20px',
+    margin: '0 5px',
+    fontSize: '1.2em',
+    fontWeight: 'bold',
+    display: 'flex',
+    alignItems: 'center',
+  },
+
 
 };
 
@@ -93,14 +153,12 @@ const Withdrawn = () => {
   const [contract, setContract] = useState(null);
   const [totalDonations, setTotalDonations] = useState(0);
   const [withdrawnAmount, setWithdrawnAmount] = useState(0);
-  const [loading, setLoading] = useState(false);
   const [charityAddress, setCharityAddress] = useState("");
   const [receiverAddress, setReceiverAddress] = useState("");
   
   const [metamaskAccount, setMetamaskAccount] = useState("");
   // eslint-disable-next-line
   const [projectCount, setProjectCount] = useState(0);
-  const navigate = useNavigate();
   // eslint-disable-next-line
   const [rewardAmount, setRewardAmount] = useState(0);
   
@@ -145,34 +203,26 @@ const Withdrawn = () => {
           .call();
         setReceiverAddress(receiverAddr);
       }
-      setLoading(false);
-
     } catch (error) {
       console.error(error);
-      setLoading(false);
     }
   };
-
-  const handlePurchase = async () => {
-    try {
-      const productsCount = await contract.methods.getProductsCount().call();
-      const products = [];
-
-      for (let i = 0; i < productsCount; i++) {
-        const product = await contract.methods.products(i).call();
-        products.push(product);
-      }
-  
-      navigate('/purchase', { state: { products } });
-    } catch (error) {
-      console.error("Failed to fetch products:", error);
-    }
-  }
-  if (loading) {
-    return <div>Loading...</div>;
-  }
   
   return (
+    <div style={styles.container}>
+      <nav>
+          <ul style={styles.navList}>
+            <li style={styles.navListItem}>
+              <h1 style={styles.title}><img src={hug} alt='error' style={{width:'50px', height:'50px', position:'relative', top:'5px'}}/>GivingHub</h1>
+            </li>
+            <li style={styles.navListItem}>
+              <Link to={'/'} style={{ textDecoration: "none", position:'absolute', top:'0px', right:'140px'}}><button style={{...styles.navButton}}>Home</button></Link>
+            </li>
+            <li style={styles.navListItem}>
+            <Link to={'/purchaseList'}><button style={styles.navButton}>SellLIst</button></Link>
+            </li>
+          </ul>
+        </nav>
     <div style={styles.container}>
       <header style={styles.header}>
           <table style={styles.table}>
@@ -223,13 +273,9 @@ const Withdrawn = () => {
           }
         </div>
       </section>
-      <footer style={styles.footer}>
-        <div style={styles.buttonContainer}>
-          <Link to={'/'} style={{ textDecoration : "none", color:'#000' }}><button style={styles.button}>Home</button></Link>
-          <button onClick={handlePurchase} style={styles.button}>Market</button>
-        </div>
-      </footer>
     </div>
+    </div>
+
   );
 };
 

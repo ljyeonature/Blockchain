@@ -16,14 +16,21 @@ const styles = {
     marginBottom: '1em',
     textDecoration: 'none',
     fontSize:'15px',
+    position:'absolute',
+    bottom: '11px',
+    left:'1450px',
   },
   input: {
+    width:'300px',
     height: '32px',
     marginRight: '10px',
-    borderRadius:'1em',
     textAlign : 'center',
     marginTop:'10px',
     fontSize:'18px',
+    position:'absolute',
+    left:'1120px',
+    bottom:'30px',
+    border:'3px solid #000'
   },  
 };
 
