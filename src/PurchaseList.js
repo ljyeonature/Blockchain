@@ -113,11 +113,12 @@ const styles = {
     top:'200px'
   },
   headingHistory: {
-    color: '#2c3e50',
-    marginBottom: '1em',
+    color: 'black',
+    // textAlign:'center',
     fontSize:'40px',
-    position:'absolute',
-    top:'250px'
+    position:'relative',
+    top:'40px',
+    borderBottom:'5px solid rgba(66, 146, 88, 0.9)'
   },
   
   select: {

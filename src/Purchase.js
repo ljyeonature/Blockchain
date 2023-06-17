@@ -341,8 +341,7 @@ const Purchase = () => {
             ) }
           </ul>
         </nav>
-        {localStorage.getItem('isConnected') === charityAddress.toLowerCase() ?
-        null : (
+        
           <div style={styles.container}>
             <h1 style={styles.heading}>Products</h1>
             <select onChange={handleProductChange} style={styles.select}>
@@ -355,7 +354,7 @@ const Purchase = () => {
             </select>
             <button onClick={handlePurchase} style={styles.purchasebutton}>Purchase</button>
           </div>
-        )}
+        
         <div style={styles.container}>
           <h1 style={styles.headingHistory}>Purchase History</h1>
           <table style={styles.table}>

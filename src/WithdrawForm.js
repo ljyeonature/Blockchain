@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React from "react";
 
 const styles = {
 
   button: {
-    backgroundColor: '#333333',
+    backgroundColor: '#000',
     color: '#fff',
     padding: '1em 2em',
     border: 'none',
@@ -11,20 +11,18 @@ const styles = {
     cursor: 'pointer',
     marginBottom: '1em',
     textDecoration: 'none',
-    position:'relative',
-    left:'95px',
-    top:'10px',
-    fontSize:'18px',
+    fontSize:'15px',
+    position:'absolute',
+    left:'525px',
+    bottom:'385px',
+    width:'270px',
   },
-
 
 };
 
 const WithdrawForm = ({ account, contract, setWithdrawnAmount, receiverAddress }) => {
-    const [loading, setLoading] = useState(false);
   
     const withdrawDonations = async () => {
-      setLoading(true);
       if (contract) {
         try {
             await contract.methods.withdrawDonations(receiverAddress).send({ from: account });
@@ -36,12 +34,7 @@ const WithdrawForm = ({ account, contract, setWithdrawnAmount, receiverAddress }
           console.error(error);
         }
       }
-      setLoading(false);
     };
-    if (loading) {
-        return <div>Loading...</div>;
-      }
-  
     return (
       <div>
         <button onClick={withdrawDonations} style={styles.button}>Withdraw Donations</button>

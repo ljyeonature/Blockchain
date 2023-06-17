@@ -30,8 +30,9 @@ const styles = {
     left:'15px',
   },
   rowdiv: {
-    alignItems:'center',
-    justifyContent:'center',
+   width:'100%',
+   height:'30vh',
+   display:'inline',
   },
   rewarddiv: {
     position:'relative',
@@ -39,17 +40,24 @@ const styles = {
   },
   heading: {
     color: 'black',
-    textAlign:'center',
+    // textAlign:'center',
     fontSize:'40px',
+    position:'relative',
+    top:'75px',
+    right:'430px',
+    borderBottom:'5px solid rgba(66, 146, 88, 0.9)'
   },
   paragraph: {
     color: 'black',
     marginBottom: '0.5em',
     textAlign:'center',
     fontSize:'22px',
+    position:'relative',
+    left:'10px',
+    bottom:'50px',
   },
   button: {
-    backgroundColor: '#333333',
+    backgroundColor: '#000',
     color: 'white',
     padding: '1em 3.5em',
     border:'none',
