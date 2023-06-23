@@ -18,15 +18,9 @@ function Home() {
   const [charityAddress, setCharityAddress] = useState('');
   // eslint-disable-next-line
   const [contract, setContract] = useState(null);
-  const [hover, setHover] = useState([false, false, false]);
+  const [hover, setHover] = useState([false, false, false, false]);
   const styles = {
-    // background: {
-    //   backgroundImage: `url(${donate})`,
-    //   backgroundRepeat:'no-repeat',
-    //   backgroundPosition:'center',
-    //   backgroundSize:'450px 400px',
-    //   backgroundPositionY:'260px',
-    // },
+
     container: {
       color: 'black',
       fontWeight: 'bold',
@@ -39,22 +33,7 @@ function Home() {
       justifyContent: 'flex-end',
       backgroundColor: 'rgba( 255, 255, 255, 0.7 )',
     },
-    // welcome:{
-    //   position:'relative',
-    //   right:'40px',
-    //   fontSize:'40px',
-    //   fontWeight:'bold',
-    // },
-    // box : {
-    //   position:'relative',
-    //   right:'280px',
-    //   top:'10px',
-    //   width:'700px',
-    //   height:'152px',
-    //   color:'black',
-    //   border:'2px solid rgba(66, 146, 88, 0.9)',
-    //   borderRadius:'2em',
-    // },
+
     contents : {
       display : 'flex',
       width:'100%',
@@ -83,17 +62,23 @@ function Home() {
     donationButton: {
       position:'absolute',
       bottom:'120px',
-      left:'330px',
+      left:'180px',
       transition: 'background 0.5s',
 
     },
     withdrawButton : {
       position:'absolute',
       bottom:'120px',
-      right:'680px',
+      left:'660px',
       transition: 'background 0.5s',
     },
     purchaseButton: {
+      position:'absolute',
+      bottom:'120px',
+      right:'510px',
+      transition: 'background 0.5s',
+    },
+    penpalButton: {
       position:'absolute',
       bottom:'120px',
       right:'35px',
@@ -222,6 +207,14 @@ function Home() {
       window.alert('Please Connect to MetaMask.');
     }
   };
+
+  const goToPenpalPage = () => {
+    if (isMetamaskConnected) {
+      navigate('/penpal');
+    } else {
+      window.alert('Please Connect to MetaMask.');
+    }
+  };
   const alertMsg = () => {
     return window.alert("Only charities have access.")
   }
@@ -239,12 +232,6 @@ function Home() {
             <h3 style={styles.h3}>BlockChain & Smart Contract Donation</h3>
         </div>
         <div style={{...styles.content, borderRight:'3px solid #333333', 
-        // backgroundImage: `url(${donate})`,
-        // backgroundRepeat:'no-repeat',
-        // backgroundPosition:'center',
-        // backgroundSize:'450px 400px',
-        // backgroundPositionY:'-200px',
-        // backgroundColor:'rgb(66, 146,88, 0.8)'
         }}>
           <h1 style={styles.h1}>Charity</h1>
           <h3 style={styles.h3}>Guarantee of Confidence</h3>
@@ -254,8 +241,11 @@ function Home() {
         <div style={{...styles.content}}>
           <h1 style={styles.h1}>Purchase</h1>
           <h3 style={styles.h3}>Another Donation Method</h3>
+        </div>
 
-
+        <div style={{...styles.content}}>
+          <h1 style={styles.h1}>Penpal</h1>
+          <h3 style={styles.h3}>Contacting the beneficiary</h3>
         </div>
       </div>
       <div>
@@ -313,6 +303,19 @@ function Home() {
       >
         Go to Purchase
         </button>
+        <button onClick={goToPenpalPage} 
+          style={{
+            ...styles.button, 
+            ...styles.penpalButton,
+            backgroundColor: hover[3] ? 'rgba(0, 0, 0, 0.8)' : '#fff',
+            color: hover[3] ? '#fff' : 'rgba(0, 0, 0, 0.8)',
+            border: hover[3] ? '#fff' : '2px solid rgba(0, 0, 0, 0.8)',
+            }}
+            onMouseEnter={() => handleMouseEnter(3)}
+            onMouseLeave={() => handleMouseLeave(3)}
+            >
+          Go to Penpal
+      </button>
       </div>
     </div>
   );

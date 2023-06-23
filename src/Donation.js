@@ -4,8 +4,10 @@ import Web3 from "web3";
 import DonationContract from "./contracts/Donation.json";
 import DonateForm from "./DonateForm";
 import RewardClaim from "./RewardClaim";
-// import donation from "./images/donation.png"
 import hug from './images/hug.jpg';
+
+
+
 
 
 const styles = {
@@ -168,11 +170,10 @@ const Donation = () => {
   const [metamaskAccount, setMetamaskAccount] = useState("");
   const navigate = useNavigate();
   const [rewardAmount, setRewardAmount] = useState(0);
-  
+
   useEffect(() => {
     loadBlockchainData();
   }, []);
-
 
   const loadBlockchainData = async () => {
     try {

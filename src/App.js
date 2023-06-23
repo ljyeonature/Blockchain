@@ -5,6 +5,7 @@ import Donation from "./Donation";
 import Purchase from "./Purchase";
 import Withdrawn from "./Withdrawn";
 import PurchaseList from "./PurchaseList";
+import Penpal from './Penpal';
 
 function App() {
   
@@ -18,6 +19,7 @@ function App() {
             <Route path="/withdrawn" element={<Withdrawn/>}/>
             <Route path="/purchase" element={<Purchase/>} />
             <Route path="/purchaseList" element={<PurchaseList/>} />
+            <Route path="/penpal" element={<Penpal/>} />
           </Routes>
         </Router>
       

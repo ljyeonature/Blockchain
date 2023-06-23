@@ -62,11 +62,8 @@ contract Donation {
         donor.donorAddress = _donorAddress;
         donor.donationAmount += msg.value;
         donor.rewarded = false;
-
         totalDonations += msg.value;
-
         emit DonationReceived(_donorAddress, msg.value);
-
         // 기부할 때마다 보상금 추가
         rewardAmount += 1 ether;
     }

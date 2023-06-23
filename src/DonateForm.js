@@ -37,10 +37,8 @@ const styles = {
 
 const DonateForm = ({ account, contract, setTotalDonations  }) => {
   const [donationAmount, setDonationAmount] = useState(0);
-  const [loading, setLoading] = useState(false);
 
   const donate = async () => {
-    setLoading(true);
     if (contract) {
       try {
         const donationWei = Web3.utils.toWei(donationAmount.toString(), "ether");
@@ -56,11 +54,7 @@ const DonateForm = ({ account, contract, setTotalDonations  }) => {
         console.error(error);
       }
     }
-    setLoading(false);
   };
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div style={styles.donateform}>

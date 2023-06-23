@@ -1,8 +1,8 @@
 const Donation = artifacts.require("Donation");
 
 module.exports = function(deployer) {
-  const receiverAddress = "0x11BF1de382540166edEc5d2e501bDfD0B68d7762";
-  const charityAddress = "0x0876CEF7D19Ff0990F3f000D2438a5482182A5b5"; // charityAddress를 원하는 주소로 설정
+  const receiverAddress = "0x98bEb30af64134b352198e03Bb23Add5aC55821e";
+  const charityAddress = "0x80d8ca90fA37545710581Eab91770832EE185990"; // charityAddress를 원하는 주소로 설정
 
   deployer.deploy(Donation, receiverAddress, { value: 0, gas: 3500000 })
     .then(async (donationContract) => {
