@@ -37,7 +37,6 @@ const styles = {
   }, 
   heading: {
     color: 'black',
-    // textAlign:'center',
     fontSize:'40px',
     position:'relative',
     top:'75px',

@@ -323,7 +323,6 @@ const Penpal = () => {
             
             await addDoc(messagesCollection, newMessageData);
             setNewMessage('');
-            // window.location.reload();
         } catch (error) {
             console.error('메시지를 전송하는 중 오류가 발생했습니다:', error);
         }

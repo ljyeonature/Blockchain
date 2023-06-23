@@ -10,9 +10,6 @@ const styles = {
       right: '530px',
       top:'150px',
     },
-    nav : {
-      // height:'500px',
-    },
     navButton: {
       backgroundColor: 'rgb(66, 146, 88)',
       padding: '10px 15px',

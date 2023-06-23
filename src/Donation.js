@@ -6,10 +6,6 @@ import DonateForm from "./DonateForm";
 import RewardClaim from "./RewardClaim";
 import hug from './images/hug.jpg';
 
-
-
-
-
 const styles = {
   header: {
     height:'40vh',

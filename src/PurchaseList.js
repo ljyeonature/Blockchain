@@ -114,7 +114,6 @@ const styles = {
   },
   headingHistory: {
     color: 'black',
-    // textAlign:'center',
     fontSize:'40px',
     position:'relative',
     top:'40px',

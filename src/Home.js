@@ -3,9 +3,6 @@ import Web3 from 'web3';
 import DonationContract from './contracts/Donation.json';
 import { useNavigate } from 'react-router-dom';
 import Nav from './Nav';
-// import donate from './images/donate.png';
-
-
 
 function Home() {
   // eslint-disable-next-line
@@ -90,7 +87,6 @@ function Home() {
       paddingLeft:'10px',
       position:'relative', 
       top:'70px',
-      // borderBottom:'1rem solid rgb(66, 146,88)'
     },
     h3: {
       position:'relative', 

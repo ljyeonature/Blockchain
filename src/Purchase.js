@@ -106,7 +106,6 @@ const styles = {
   },
   heading: {
     color: 'black',
-    // textAlign:'center',
     fontSize:'40px',
     position:'relative',
     right:'660px',
@@ -115,7 +114,6 @@ const styles = {
   },
   headingHistory: {
     color: 'black',
-    // textAlign:'center',
     fontSize:'40px',
     position:'relative',
     right:'587px',
@@ -292,7 +290,6 @@ const Purchase = () => {
   const currentItems = filteredPurchases.slice(indexOfFirstItem, indexOfLastItem);
 
   const Pagination = () => {
-    // const pageNumbers = Math.ceil(purchases.length / itemsPerPage);
 
     return (
       <div style={{position:'absolute', bottom:'100px'}}>
